@@ -1,8 +1,7 @@
 
 int bot[7] = {2,3,4,5,6,7,8};
 int top[7] = {9,10,11,12,13,A3,A2};
-long randNumTop;
-long randNumBot;
+long randNum;
 
 void setup() {
 
@@ -148,12 +147,12 @@ void zero() {
 
 int (*nums[10])() = {one,two,three,four,five,six,seven,eight,nine,zero};
 
-void cycleTop() {
-  randNumTop = random (0,10);
-  nums[randNumTop]();
+void cycle() {
+  randNum = random(0,10);
+  nums[randNum]();
   delay(100);
 }
 
 void loop() {
-  cycleTop();
+  cycle();
 }
