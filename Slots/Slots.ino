@@ -281,7 +281,7 @@ void loop() {
     digitalWrite(lights[0],HIGH);
     digitalWrite(lights[2],LOW);
   }
-  else if (topList != botList && topList != 11 && (digitalRead(A0) == HIGH)){
+  if (topList != botList && topList != 11 && (digitalRead(A0) == HIGH)){
     digitalWrite(lights[2],HIGH);
   }
   if(digitalRead(A0) == HIGH){
