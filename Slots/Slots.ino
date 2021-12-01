@@ -16,7 +16,7 @@ void setup() {
   }
 }
 
-int one(int screen) {
+int one(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1 || i == 2) {
@@ -28,7 +28,7 @@ int one(int screen) {
   }
 }
 
-int two(int screen) {
+int two(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 2 || i == 5) {
@@ -40,7 +40,7 @@ int two(int screen) {
   }
 }
 
-int three(int screen) {
+int three(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 4 || i == 5) {
@@ -52,7 +52,7 @@ int three(int screen) {
   }
 }
 
-int four(int screen) {
+int four(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 0 || i == 3 || i == 4) {
@@ -64,7 +64,7 @@ int four(int screen) {
   }
 }
 
-int five(int screen) {
+int five(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1 || i == 4) {
@@ -76,7 +76,7 @@ int five(int screen) {
   }
 }
 
-int six(int screen) {
+int six(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1) {
@@ -88,7 +88,7 @@ int six(int screen) {
   }
 }
 
-int seven(int screen) {
+int seven(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 0 || i == 1 || i == 2) {
@@ -100,14 +100,14 @@ int seven(int screen) {
   }
 }
 
-int eight(int screen) {
+int eight(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     digitalWrite(screen[i], HIGH);
   }
 }
 
-int nine(int screen) {
+int nine(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 3 || i == 4) {
@@ -119,7 +119,7 @@ int nine(int screen) {
   }
 }
 
-int zero(int screen) {
+int zero(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 6) {
@@ -131,7 +131,7 @@ int zero(int screen) {
   }
 }
 
-int (*nums[10])() = {one, two, three, four, five, six, seven, eight, nine, zero};
+int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
 void cycle() {
   randNum = random(0, 10);
@@ -142,17 +142,21 @@ void cycle() {
 }
 
 void loop() {
+  if(digitalRead(A0) == HIGH){
   cycle();
+  }
+}
   /*
   green light if both numbers are the same
   yellow light if both numbers are odd/even
   red light if none of the above
-  
+  DEAFAULT STATE OF PUSHBUTTON IS HIGH (PRESSED == LOW)
+  */
+  /*
   if (topList == 11 && botList == 11) {
     cycle();
   }
-
-  //pushbutton default state is HIGH)
+  
   if (digitalRead(A0) == LOW) {
     topList = random(0, 10);
     botList = random(0, 10);
@@ -174,4 +178,3 @@ void loop() {
       digitalWrite(lights[i],LOW);
     }
   }*/
-}
