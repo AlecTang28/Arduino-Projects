@@ -16,7 +16,7 @@ void setup() {
   }
 }
 
-void one(screen) {
+int one(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1 || i == 2) {
@@ -28,7 +28,7 @@ void one(screen) {
   }
 }
 
-void two(screen) {
+int two(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 2 || i == 5) {
@@ -40,7 +40,7 @@ void two(screen) {
   }
 }
 
-void three(screen) {
+int three(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 4 || i == 5) {
@@ -52,7 +52,7 @@ void three(screen) {
   }
 }
 
-void four(screen) {
+int four(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 0 || i == 3 || i == 4) {
@@ -64,7 +64,7 @@ void four(screen) {
   }
 }
 
-void five(screen) {
+int five(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1 || i == 4) {
@@ -76,7 +76,7 @@ void five(screen) {
   }
 }
 
-void six(screen) {
+int six(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 1) {
@@ -88,7 +88,7 @@ void six(screen) {
   }
 }
 
-void seven(screen) {
+int seven(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 0 || i == 1 || i == 2) {
@@ -100,14 +100,14 @@ void seven(screen) {
   }
 }
 
-void eight(screen) {
+int eight(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     digitalWrite(screen[i], HIGH);
   }
 }
 
-void nine(screen) {
+int nine(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 3 || i == 4) {
@@ -119,7 +119,7 @@ void nine(screen) {
   }
 }
 
-void zero(screen) {
+int zero(int screen) {
 
   for (int i = 0; i <= 6; i++) {
     if (i == 6) {
@@ -144,6 +144,10 @@ void cycle() {
 void loop() {
   cycle();
   /*
+  green light if both numbers are the same
+  yellow light if both numbers are odd/even
+  red light if none of the above
+  
   if (topList == 11 && botList == 11) {
     cycle();
   }
