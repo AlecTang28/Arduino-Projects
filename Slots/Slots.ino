@@ -135,7 +135,9 @@ int (*nums[10])() = {one, two, three, four, five, six, seven, eight, nine, zero}
 
 void cycle() {
   randNum = random(0, 10);
-  nums[randNum]();
+  nums[randNum](top);
+  randNum = random(0, 10);
+  nums[randNum](bot);
   delay(75);
 }
 
