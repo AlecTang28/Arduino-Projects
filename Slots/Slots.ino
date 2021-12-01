@@ -1,11 +1,13 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
-int lights[3] = {A0,A4,A5};
+int lights[3] = {A1,A4,A5};
 long randNum;
 
 void setup() {
 
   Serial.begin(9600);
+  pinMode(A0, INPUT);
+  
   for (int i = 0; i <= 3; i++) {
     pinMode(lights[i], OUTPUT);
   }
@@ -142,8 +144,15 @@ void cycle() {
 }
 
 void loop() {
-  if(digitalRead(A0) == HIGH){
-  cycle();
+  
+  if(digitalRead(A0) == LOW){
+    if (digitalRead(A0) == HIGH){
+      digitalWrite(lights[0],HIGH);
+    }
+  }
+  else{
+    cycle();
+    digitalWrite(lights[0],LOW);
   }
 }
   /*
