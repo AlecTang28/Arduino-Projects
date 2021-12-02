@@ -2,6 +2,8 @@ int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
 int lights[3] = {A1,A4,A5};
 long randNum;
+unsigned long previousTime = 0;
+unsigned long afkBefore = 0;
 
 void setup() {
 
@@ -135,55 +137,32 @@ int zero(int screen[]) {
 
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
-void cycle() {
-  randNum = random(0, 10);
-  nums[randNum](top);
-  randNum = random(0, 10);
-  nums[randNum](bot);
-  delay(75);
+void cycle(int interval) {
+  
+  unsigned long currentTime = millis();
+
+  if (currentTime - previousTime >= interval){
+    randNum = random(0, 10);
+    nums[randNum](top);
+    randNum = random(0, 10);
+    nums[randNum](bot);
+    previousTime = currentTime;
+  }
+}
+
+void afk() {
+  
+  unsigned long afkNow = millis();
+
+  for (int i = 0; i <= 9; i++){
+    if (afkNow - afkBefore >= 500){
+      nums[i](top);
+      nums[abs(i-9)](bot);
+      afkBefore = afkNow;
+    }
+  }
 }
 
 void loop() {
-  
-  if(digitalRead(A0) == LOW){
-    if (digitalRead(A0) == HIGH){
-      digitalWrite(lights[0],HIGH);
-    }
-  }
-  else{
-    cycle();
-    digitalWrite(lights[0],LOW);
-  }
+  afk();
 }
-  /*
-  green light if both numbers are the same
-  yellow light if both numbers are odd/even
-  red light if none of the above
-  DEAFAULT STATE OF PUSHBUTTON IS HIGH (PRESSED == LOW)
-  */
-  /*
-  if (topList == 11 && botList == 11) {
-    cycle();
-  }
-  
-  if (digitalRead(A0) == LOW) {
-    topList = random(0, 10);
-    botList = random(0, 10);
-  }
-  if (topList != 11 && botList != 11) {
-    nums[topList]();
-    nums2[botList]();
-  }
-
-  if (topList == botList && topList != 11 && (digitalRead(A0) == HIGH)){
-    digitalWrite(lights[0],HIGH);
-    digitalWrite(lights[2],LOW);
-  }
-  if (topList != botList && topList != 11 && (digitalRead(A0) == HIGH)){
-    digitalWrite(lights[2],HIGH);
-  }
-  if(digitalRead(A0) == HIGH){
-    for (int i = 0; i <= 3; i++) {
-      digitalWrite(lights[i],LOW);
-    }
-  }*/
