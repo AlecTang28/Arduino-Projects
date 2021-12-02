@@ -135,8 +135,13 @@ int zero(int screen[]) {
   }
 }
 
-int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
+int blank(int screen[]) {
+  for (int i = 0; i <= 6; i++){
+    digitalWrite(screen[i],LOW);
+  }
+}
 
+int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 void cycle(int interval) {
   
   unsigned long currentTime = millis();
@@ -151,18 +156,14 @@ void cycle(int interval) {
 }
 
 void afk() {
-  
+  int x = 0;
   unsigned long afkNow = millis();
 
-  for (int i = 0; i <= 9; i++){
-    if (afkNow - afkBefore >= 500){
-      nums[i](top);
-      nums[abs(i-9)](bot);
-      afkBefore = afkNow;
-    }
+  if (afkNow - afkBefore >= 500){
+    afkBefore = afkNow;
   }
 }
 
 void loop() {
-  afk();
+  cycle(75);
 }
