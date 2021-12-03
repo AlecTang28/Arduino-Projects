@@ -1,19 +1,19 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
-int lights[3] = {A1,A4,A5};
-long randNum;
+int lights[3] = {A1, A4, A5};
+unsigned long before = 0;
 unsigned long previousTime = 0;
-unsigned long afkBefore = 0;
+int x = 0;
+int state = 0;
 
 void setup() {
 
   Serial.begin(9600);
   pinMode(A0, INPUT);
-  
+
   for (int i = 0; i <= 3; i++) {
     pinMode(lights[i], OUTPUT);
   }
-  
   for (int i = 0; i <= 6; i++) {
     pinMode(bot[i], OUTPUT);
     pinMode(top[i], OUTPUT);
@@ -136,34 +136,57 @@ int zero(int screen[]) {
 }
 
 int blank(int screen[]) {
-  for (int i = 0; i <= 6; i++){
-    digitalWrite(screen[i],LOW);
+  for (int i = 0; i <= 6; i++) {
+    digitalWrite(screen[i], LOW);
   }
 }
 
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
-void cycle(int interval) {
-  
-  unsigned long currentTime = millis();
 
-  if (currentTime - previousTime >= interval){
-    randNum = random(0, 10);
-    nums[randNum](top);
-    randNum = random(0, 10);
-    nums[randNum](bot);
-    previousTime = currentTime;
+void cycle(int interval) {
+  unsigned long now = millis();
+  unsigned long currentTime = millis();
+  if (now - before < 3000){
+    if (currentTime - previousTime >= interval) {
+      nums[random(0,10)](top);
+      nums[random(0,10)](bot);
+      previousTime = currentTime;
+    }
+  }
+  else{
+    x = 0;
   }
 }
 
-void afk() {
-  int x = 0;
-  unsigned long afkNow = millis();
-
-  if (afkNow - afkBefore >= 500){
-    afkBefore = afkNow;
+void ledBlink() {
+/*
+  int x = millis();
+  int y = x % 500;
+  Serial.println(x);
+  
+  if(x % 500 == 0){    
+    eight(top);
+    eight(bot);
   }
+  if(x % 1000 == 0){
+    blank(top);
+    blank(bot);
+  }
+*/
 }
 
 void loop() {
-  cycle(75);
+  cycle(100);
+  /*
+  if(digitalRead(A0) == LOW && state == 0){
+    state = 1;
+  }
+  if(digitalRead(A0) == HIGH && state == 1){
+    x = 1;
+    state = 0;
+  }
+  if(x == 1){
+    cycle(100);
+  }
+  Serial.println(state);*/
 }
