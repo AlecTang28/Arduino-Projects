@@ -1,7 +1,6 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
 int lights[3] = {A1, A4, A5};
-unsigned long before = 0;
 unsigned long previousTime = 0;
 int x = 0;
 int state = 0;
@@ -144,9 +143,11 @@ int blank(int screen[]) {
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
 void cycle(int interval) {
+
   unsigned long now = millis();
   unsigned long currentTime = millis();
-  if (now - before < 3000){
+  Serial.println(now);
+  if (now < 3000){
     if (currentTime - previousTime >= interval) {
       nums[random(0,10)](top);
       nums[random(0,10)](bot);
@@ -154,6 +155,7 @@ void cycle(int interval) {
     }
   }
   else{
+    now = 0;
     x = 0;
   }
 }
@@ -176,8 +178,6 @@ void ledBlink() {
 }
 
 void loop() {
-  cycle(100);
-  /*
   if(digitalRead(A0) == LOW && state == 0){
     state = 1;
   }
@@ -188,5 +188,5 @@ void loop() {
   if(x == 1){
     cycle(100);
   }
-  Serial.println(state);*/
+  Serial.println(state);
 }
