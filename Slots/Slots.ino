@@ -162,7 +162,7 @@ void cycle(int interval) {
 }
 
 void loop() {
-  /*
+  
   if(millis() >= x + 500){
     x = millis();
     if(blinkOn == false){
@@ -175,8 +175,7 @@ void loop() {
       eight(bot);
       blinkOn = false; 
     }
-  }*/
-  cycle(100);
+  }
   /*
   if(digitalRead(A0) == LOW && state == 0){
     state = 1;
