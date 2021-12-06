@@ -1,10 +1,12 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
 int lights[3] = {A1, A4, A5};
-unsigned long now = 0;
+bool blinkState = false;
 int blinkTime = 0;
 int state = 0;
-bool blinkState = false;
+int cycles = 0;
+int topValue = 0;
+int botValue = 0;
 
 void setup() {
 
@@ -169,14 +171,32 @@ void loop() {
   if(digitalRead(A0) == HIGH && state == 1){
     state = 2;
   }
-
-  Serial.println(now);
   
   if(state == 2){
-    now = millis() - (millis() - 3000);
-    if (now <= 3000){
-      nums[random(0,10)](top);
-      nums[random(0,10)](bot);
+    if(cycles <= 30){
+      cycles = cycles + 1;
+      topValue = random(0,10);
+      botValue = random(0,10);
+      nums[topValue](top);
+      nums[botValue](bot);
+      delay(100);
+    }
+    else{ 
+      if(topValue == botValue){
+        digitalWrite(lights[0],HIGH);
+        digitalWrite(lights[1],LOW);
+        digitalWrite(lights[2],LOW);
+      }
+      else if(((abs(topValue - botValue) % 2) == 0) || (topValue % 2 != 0 && botValue % 2 != 0)){
+        digitalWrite(lights[0],LOW);
+        digitalWrite(lights[1],HIGH);
+        digitalWrite(lights[2],LOW);
+      }
+      else{
+        digitalWrite(lights[0],LOW);
+        digitalWrite(lights[1],LOW);
+        digitalWrite(lights[2],HIGH);
+      }
     }
   }
 }
