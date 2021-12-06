@@ -5,8 +5,8 @@ bool blinkState = false;
 int blinkTime = 0;
 int state = 0;
 int cycles = 0;
-int topValue = 0;
-int botValue = 0;
+long topValue = 0;
+long botValue = 0;
 
 void setup() {
 
@@ -182,8 +182,6 @@ void loop() {
       delay(100);
     }
     else{
-      nums[topValue](top);
-      nums[botValue](bot);
       if(topValue == botValue){
         digitalWrite(lights[0],HIGH);
         digitalWrite(lights[1],LOW);
