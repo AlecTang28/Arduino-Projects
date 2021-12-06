@@ -1,13 +1,14 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
 int lights[3] = {A1, A4, A5};
-unsigned long previousTime = 0;
-int x = 0;
+unsigned long now = 0;
+int blinkTime = 0;
 int state = 0;
-bool blinkOn = false;
+bool blinkState = false;
+
 void setup() {
 
-  x = millis();
+  blinkTime = millis();
   Serial.begin(9600);
   pinMode(A0, INPUT);
 
@@ -143,49 +144,39 @@ int blank(int screen[]) {
 
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
-void cycle(int interval) {
-
-  unsigned long now = millis();
-  unsigned long currentTime = millis();
-  Serial.println(now);
-  if (now < 3000){
-    if (currentTime - previousTime >= interval) {
-      nums[random(0,10)](top);
-      nums[random(0,10)](bot);
-      previousTime = currentTime;
-    }
-  }
-  else{
-    now = 0;
-    x = 0;
-  }
-}
-
 void loop() {
-  
-  if(millis() >= x + 500){
-    x = millis();
-    if(blinkOn == false){
-      blank(top);
-      blank(bot);
-      blinkOn = true; 
-    }
-    else if(blinkOn == true){
-      eight(top);
-      eight(bot);
-      blinkOn = false; 
+
+  if(state == 0 || state == 1){
+    if(millis() >= blinkTime + 500){
+      blinkTime = millis();
+      if(blinkState == false){
+        blank(top);
+        blank(bot);
+        blinkState = true; 
+      }
+      else if(blinkState == true){
+        eight(top);
+        eight(bot);
+        blinkState = false; 
+      }
     }
   }
-  /*
+  
   if(digitalRead(A0) == LOW && state == 0){
     state = 1;
   }
+  
   if(digitalRead(A0) == HIGH && state == 1){
-    x = 1;
-    state = 0;
+    state = 2;
   }
-  if(x == 1){
-    cycle(100);
+
+  Serial.println(now);
+  
+  if(state == 2){
+    now = millis() - (millis() - 3000);
+    if (now <= 3000){
+      nums[random(0,10)](top);
+      nums[random(0,10)](bot);
+    }
   }
-  Serial.println(state);*/
 }
