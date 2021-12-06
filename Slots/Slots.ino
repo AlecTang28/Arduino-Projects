@@ -181,7 +181,9 @@ void loop() {
       nums[botValue](bot);
       delay(100);
     }
-    else{ 
+    else{
+      nums[topValue](top);
+      nums[botValue](bot);
       if(topValue == botValue){
         digitalWrite(lights[0],HIGH);
         digitalWrite(lights[1],LOW);
@@ -198,5 +200,6 @@ void loop() {
         digitalWrite(lights[2],HIGH);
       }
     }
+    Serial.println(topValue);
   }
 }
