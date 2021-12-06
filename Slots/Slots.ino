@@ -4,9 +4,10 @@ int lights[3] = {A1, A4, A5};
 unsigned long previousTime = 0;
 int x = 0;
 int state = 0;
-
+bool blinkOn = false;
 void setup() {
 
+  x = millis();
   Serial.begin(9600);
   pinMode(A0, INPUT);
 
@@ -160,24 +161,23 @@ void cycle(int interval) {
   }
 }
 
-void ledBlink() {
-/*
-  int x = millis();
-  int y = x % 500;
-  Serial.println(x);
-  
-  if(x % 500 == 0){    
-    eight(top);
-    eight(bot);
-  }
-  if(x % 1000 == 0){
-    blank(top);
-    blank(bot);
-  }
-*/
-}
-
 void loop() {
+  /*
+  if(millis() >= x + 500){
+    x = millis();
+    if(blinkOn == false){
+      blank(top);
+      blank(bot);
+      blinkOn = true; 
+    }
+    else if(blinkOn == true){
+      eight(top);
+      eight(bot);
+      blinkOn = false; 
+    }
+  }*/
+  cycle(100);
+  /*
   if(digitalRead(A0) == LOW && state == 0){
     state = 1;
   }
@@ -188,5 +188,5 @@ void loop() {
   if(x == 1){
     cycle(100);
   }
-  Serial.println(state);
+  Serial.println(state);*/
 }
