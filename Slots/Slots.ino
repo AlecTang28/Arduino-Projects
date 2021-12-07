@@ -1,22 +1,23 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
 int top[7] = {9, 10, 11, 12, 13, A3, A2};
-int lights[3] = {A1, A4, A5};
+int redPin = A1;
+int grnPin = A4;
 bool blinkState = false;
 int blinkTime = 0;
 int state = 0;
 int cycles = 0;
 long topValue = 0;
 long botValue = 0;
+int now = 0;
 
 void setup() {
 
+  randomSeed(analogRead(A5));
   blinkTime = millis();
   Serial.begin(9600);
   pinMode(A0, INPUT);
-
-  for (int i = 0; i <= 3; i++) {
-    pinMode(lights[i], OUTPUT);
-  }
+  pinMode(A1, OUTPUT);
+  pinMode(A4, OUTPUT);  
   for (int i = 0; i <= 6; i++) {
     pinMode(bot[i], OUTPUT);
     pinMode(top[i], OUTPUT);
@@ -146,6 +147,11 @@ int blank(int screen[]) {
 
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
+void rgb(int redValue, int grnValue){
+  analogWrite(redPin, redValue);
+  analogWrite(grnPin, grnValue);
+}
+
 void loop() {
 
   if(state == 0 || state == 1){
@@ -171,7 +177,7 @@ void loop() {
   if(digitalRead(A0) == HIGH && state == 1){
     state = 2;
   }
-  
+  Serial.println(state);
   if(state == 2){
     if(cycles <= 30){
       cycles = cycles + 1;
@@ -181,23 +187,24 @@ void loop() {
       nums[botValue](bot);
       delay(100);
     }
-    else{
+    else if(cycles > 30){
       if(topValue == botValue){
-        digitalWrite(lights[0],HIGH);
-        digitalWrite(lights[1],LOW);
-        digitalWrite(lights[2],LOW);
+        rgb(0,255);//green
       }
-      else if(((abs(topValue - botValue) % 2) == 0) || (topValue % 2 != 0 && botValue % 2 != 0)){
-        digitalWrite(lights[0],LOW);
-        digitalWrite(lights[1],HIGH);
-        digitalWrite(lights[2],LOW);
+      else if(abs(topValue - botValue) <= 2){
+        rgb(255,255);//yellow
       }
       else{
-        digitalWrite(lights[0],LOW);
-        digitalWrite(lights[1],LOW);
-        digitalWrite(lights[2],HIGH);
+        rgb(255,0);//red
       }
     }
-    Serial.println(topValue);
+    /*if(digitalRead(A0) == LOW){
+      state = 3;
+    }*/
   }
+  /*if(state = 3){
+    if(digitalRead(A0) == HIGH){
+      state = 1;
+    }
+  }*/
 }
