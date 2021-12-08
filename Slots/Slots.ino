@@ -191,9 +191,9 @@ void loop() {
       if(topValue == botValue){
         rgb(0,255);//green
       }
-      else if(abs(topValue - botValue) <= 2){
+      /*else if(abs(topValue - botValue) <= 2){
         rgb(255,255);//yellow
-      }
+      }*/
       else{
         rgb(255,0);//red
       }
