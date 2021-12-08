@@ -1,7 +1,7 @@
 int bot[7] = {2, 3, 4, 5, 6, 7, 8};
-int top[7] = {9, 10, 11, 12, 13, A3, A2};
-int redPin = A1;
-int grnPin = A4;
+int top[7] = {9, 12, A1, A4, 13, A3, A2};
+int redPin = 10;
+int grnPin = 11;
 bool blinkState = false;
 int blinkTime = 0;
 int state = 0;
@@ -16,8 +16,8 @@ void setup() {
   blinkTime = millis();
   Serial.begin(9600);
   pinMode(A0, INPUT);
-  pinMode(A1, OUTPUT);
-  pinMode(A4, OUTPUT);  
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);  
   for (int i = 0; i <= 6; i++) {
     pinMode(bot[i], OUTPUT);
     pinMode(top[i], OUTPUT);
@@ -191,13 +191,14 @@ void loop() {
       if(topValue == botValue){
         rgb(0,255);//green
       }
-      /*else if(abs(topValue - botValue) <= 2){
+      else if(abs(topValue - botValue) <= 2){
         rgb(255,255);//yellow
-      }*/
+      }
       else{
         rgb(255,0);//red
       }
     }
+    //try changing pins to pwm for led
     /*if(digitalRead(A0) == LOW){
       state = 3;
     }*/
