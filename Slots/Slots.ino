@@ -8,14 +8,11 @@ int state = 0;
 int cycles = 0;
 long topValue = 0;
 long botValue = 0;
-int now = 0;
 
 void setup() {
 
   randomSeed(analogRead(A5));
   blinkTime = millis();
-  Serial.begin(9600);
-  pinMode(A0, INPUT);
   pinMode(11, OUTPUT);
   pinMode(10, OUTPUT);  
   for (int i = 0; i <= 6; i++) {
@@ -208,5 +205,4 @@ void loop() {
       state = 0; 
     }
   }
-  Serial.println(state);
 }
