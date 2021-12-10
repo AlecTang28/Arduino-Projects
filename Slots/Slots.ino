@@ -147,7 +147,7 @@ int blank(int screen[]) {
 
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
-void rgb(int redValue, int grnValue){
+void colour(int redValue, int grnValue){
   analogWrite(redPin, redValue);
   analogWrite(grnPin, grnValue);
 }
@@ -155,6 +155,8 @@ void rgb(int redValue, int grnValue){
 void loop() {
 
   if(state == 0 || state == 1){
+    colour(0,0);
+    cycles = 0;
     if(millis() >= blinkTime + 500){
       blinkTime = millis();
       if(blinkState == false){
@@ -177,7 +179,6 @@ void loop() {
   if(digitalRead(A0) == HIGH && state == 1){
     state = 2;
   }
-  Serial.println(state);
   if(state == 2){
     if(cycles <= 30){
       cycles = cycles + 1;
@@ -189,23 +190,23 @@ void loop() {
     }
     else if(cycles > 30){
       if(topValue == botValue){
-        rgb(0,255);//green
+        colour(0,255);//green
       }
       else if(abs(topValue - botValue) <= 2){
-        rgb(255,255);//yellow
+        colour(255,255);//yellow
       }
       else{
-        rgb(255,0);//red
+        colour(255,0);//red
       }
     }
-    //try changing pins to pwm for led
-    /*if(digitalRead(A0) == LOW){
+    if(digitalRead(A0) == LOW){
       state = 3;
-    }*/
-  }
-  /*if(state = 3){
-    if(digitalRead(A0) == HIGH){
-      state = 1;
     }
-  }*/
+  }
+  if(state == 3){
+    if(digitalRead(A0) == HIGH){
+      state = 0; 
+    }
+  }
+  Serial.println(state);
 }
