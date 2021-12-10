@@ -21,6 +21,7 @@ void setup() {
   }
 }
 
+//functions to display numbers 
 int one(int screen[]) {
 
   for (int i = 0; i <= 6; i++) {
@@ -142,18 +143,21 @@ int blank(int screen[]) {
   }
 }
 
+//call on any number function using pointer
 int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
 
+//set colur values for RGB LED
 void colour(int redValue, int grnValue){
   analogWrite(redPin, redValue);
   analogWrite(grnPin, grnValue);
 }
 
 void loop() {
-
+  
   if(state == 0 || state == 1){
     colour(0,0);
     cycles = 0;
+    //alternate bewteen displaying 8 and a blank screen (blinking)
     if(millis() >= blinkTime + 500){
       blinkTime = millis();
       if(blinkState == false){
@@ -176,7 +180,9 @@ void loop() {
   if(digitalRead(A0) == HIGH && state == 1){
     state = 2;
   }
+  
   if(state == 2){
+    //randomly cycle numbers 30 times
     if(cycles <= 30){
       cycles = cycles + 1;
       topValue = random(0,10);
@@ -186,12 +192,16 @@ void loop() {
       delay(100);
     }
     else if(cycles > 30){
+
+      //if numbers are same, turn green
       if(topValue == botValue){
         colour(0,255);//green
       }
+      //if numbers are within 2, turn yellow
       else if(abs(topValue - botValue) <= 2){
         colour(255,255);//yellow
       }
+      //if none of the above, turn red
       else{
         colour(255,0);//red
       }
@@ -200,6 +210,7 @@ void loop() {
       state = 3;
     }
   }
+  //go back to blinking
   if(state == 3){
     if(digitalRead(A0) == HIGH){
       state = 0; 
