@@ -1,7 +1,7 @@
-int bot[7] = {2, 3, 4, 5, 6, 7, 8};
-int top[7] = {9, 12, A1, A4, 13, A3, A2};
-int redPin = 10;
-int grnPin = 11;
+int bot[7] = {8, 7, 6, 5, 4, 3, 2};
+int top[7] = {13, 12, 11, A3, A4, 10, 9};
+int redPin = A1;
+int grnPin = A2;
 bool blinkState = false;
 int blinkTime = 0;
 int state = 0;
@@ -13,8 +13,8 @@ void setup() {
 
   randomSeed(analogRead(A5));
   blinkTime = millis();
-  pinMode(11, OUTPUT);
-  pinMode(10, OUTPUT);  
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);  
   for (int i = 0; i <= 6; i++) {
     pinMode(bot[i], OUTPUT);
     pinMode(top[i], OUTPUT);
