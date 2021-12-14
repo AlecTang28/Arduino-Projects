@@ -144,7 +144,7 @@ int blank(int screen[]) {
 }
 
 //call on any number function using pointer
-int (*nums[10])(int screen[]) = {one, two, three, four, five, six, seven, eight, nine, zero};
+int (*nums[10])(int screen[]) = {zero, one, two, three, four, five, six, seven, eight, nine};
 
 //set colur values for RGB LED
 void colour(int redValue, int grnValue){
